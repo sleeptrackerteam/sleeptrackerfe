@@ -46,41 +46,51 @@ class SignUpPage extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="register">
                 <h2>Create An Account</h2>
-                <form onSubmit={this.register}>
+                <form className="register-form" onSubmit={this.register}>
+                    <h4>Your full name</h4>
                     <input
                     type="text"
                     name="fullname"
-                    placeholder="Enter your full name"
+                    placeholder="John Smith"
                     value={this.state.fullname}
                     onChange={this.handleChange}
                     />
+                    <h4>Select a username</h4>
                     <input
                     type="text"
                     name="username"
-                    placeholder="Enter username"
+                    placeholder="Username"
                     value={this.state.username}
                     onChange={this.handleChange}
-                    /><input
+                    required
+                    />
+                    <h4>Enter your email</h4>
+                    <input
                     type="email"
                     name="email"
-                    placeholder="Enter email"
+                    placeholder="Youremail@email.com"
                     value={this.state.email}
                     onChange={this.handleChange}
-                    /><input
+                    />
+                    <h4>Select a password</h4>
+                    <input
                     type="password"
                     name="password"
-                    placeholder="Enter password"
+                    placeholder="Password123"
                     value={this.state.password}
                     onChange={this.handleChange}
+                    required
                     />
+                    <h4>Verify your password</h4>
                     <input
                     type="password"
                     name="verifypassword"
-                    placeholder="Verify Password"
+                    placeholder="Password123"
                     value={this.state.verifypassword}
                     onChange={this.handleChange}
+                    required
                     />
                     <button type="submit">Register</button>
                 </form>

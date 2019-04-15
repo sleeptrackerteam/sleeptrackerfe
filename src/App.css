@@ -1,33 +1,86 @@
 .App {
   text-align: center;
+  background-color: #6166D1;
+}
+/*blue #110C6C */
+/*orange #F6AC46 */
+
+.register {
+  border: 3px solid #F6AC46;
+  margin: 10%;
+  padding: 5%;
+  color: #F6AC46;
+  background-color: #110C6C;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.register-form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.register h4 {
+  margin: .5rem;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.register input {
+  width: 15rem;
+  height: 1rem;
+  font-size: 1.15rem;
+  padding: 1rem;
+  margin: .5rem;
+  border-radius: 1rem;
+  background-color: white;
+  color: #110C6C;
+  border: 3px solid #F6AC46;
+  text-align: center;
+}
+
+.register button {
+  margin-top: 1rem;
+  padding: 1rem;
+  width: 10rem;
+  font-size: 1.15rem;
+  border-radius: .75rem;
+  background-color: #F6AC46;
+}
+
+.login {
+  border: 3px solid #F6AC46;
+  margin: 10%;
+  padding: 5%;
+  color: #F6AC46;
+  background-color: #110C6C
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login h4 {
+  margin: .5rem;
+}
+
+.login input {
+  width: 15rem;
+  height: 1.25rem;
+  font-size: 1.15rem;
+  padding: 1rem;
+  margin: .5rem;
+  border-radius: 1rem;
+  background-color: white;
+  color: #110C6C;
+  border: 3px solid #F6AC46;
+  text-align: center;
+}
+
+.login button {
+  margin-top: 1rem;
+  padding: 1rem;
+  width: 10rem;
+  font-size: 1.15rem;
+  border-radius: .75rem;
+  background-color: #F6AC46;
 }

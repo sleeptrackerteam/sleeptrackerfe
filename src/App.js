@@ -7,7 +7,7 @@ import HomePageView from './components/HomePage/HomePageView';
 class App extends Component {
   componentDidMount() { 
     if (!localStorage.getItem("userdata") && window.location.pathname !== '/register'){
-    this.props.history.push('./login');
+    this.props.history.push('/login');
     }
   }
 

@@ -1,28 +1,25 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-
+import { withRouter } from 'react-router-dom';
+import Authenticate from './components/Login/Autheticate';
+import View from './components/Login/View';
+import HomePageView from './components/HomePage/HomePageView';
 class App extends Component {
+  componentDidMount() { 
+    if (!localStorage.getItem("userdata") && window.location.pathname !== '/register'){
+    this.props.history.push('./login');
+    }
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <Auth/>
       </div>
     );
   }
 }
 
-export default App;
+const Auth = withRouter(Authenticate(HomePageView)(View));
+
+export default withRouter(App);

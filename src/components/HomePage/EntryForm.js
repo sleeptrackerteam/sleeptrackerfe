@@ -1,4 +1,5 @@
 import React from 'react';
+import { Form } from 'reactstrap';
 
 class EntryForm extends React.Component {
     constructor() {
@@ -7,7 +8,10 @@ class EntryForm extends React.Component {
     }
 
     render() {
-        return ()
+        return (
+            <div>
+            </div>
+        )
     }
 }
 

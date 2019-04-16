@@ -5,6 +5,21 @@
 /*blue #110C6C */
 /*orange #F6AC46 */
 
+nav {
+  padding: 1rem 0 1rem 0;
+  display: flex;
+  justify-content: flex-start;
+  border-bottom: 3px solid #F6AC46;
+  background: #110C6C;
+}
+
+.nav-link {
+  font-size: 1.15rem;
+  text-decoration: none;
+  color:#F6AC46;
+  padding-left: 2rem;
+}
+
 .register {
   border: 3px solid #F6AC46;
   margin: 10%;

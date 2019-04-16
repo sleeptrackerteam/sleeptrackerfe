@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
+const URL = "https://sleeper-app.herokuapp.com";
 class SignUpPage extends React.Component {
     constructor() {
         super();
@@ -24,13 +25,14 @@ class SignUpPage extends React.Component {
         event.preventDefault();
         if (this.state.password === this.state.verifypassword) {
             axios
-                .post('https://sleeper-app.herokuapp.com/api/auth/register', {
+                .post(`${URL}/api/auth/register`, {
                     fullname: this.state.fullname,
                     username: this.state.username,
                     email: this.state.email,
                     password: this.state.password
                 })
                 .then(res => {
+                    console.log("It worked!", res)
                     alert('Your account has been registered')
                 })
                 .catch(err => console.log('Error', err));

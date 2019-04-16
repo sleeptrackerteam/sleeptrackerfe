@@ -7,7 +7,6 @@ class UpdateForm extends React.Component {
     }
 
     render() {
-        return ()
     }
 }
 

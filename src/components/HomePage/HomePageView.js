@@ -1,13 +1,21 @@
-import React, { Component } from 'react'
+import React from 'react';
+import HomePageNav from './HomePageNav';
+import { Route } from 'react-router-dom';
+import Landing from './Landing';
 
-export class HomePageView extends Component {
-  render() {
-    return (
-      <div>
-        <h2>hi</h2>
-      </div>
-    )
-  }
+class HomePageView extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {}
+    }
+    render() {
+        return (
+        <div>
+           <HomePageNav loggedOut={this.props.loggedOut}/>
+           <Route exact path='/home' component={Landing}/>
+        </div>
+        )
+    }
 }
 
 export default HomePageView;

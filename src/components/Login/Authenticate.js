@@ -15,10 +15,8 @@ const Authenticate = App => Login =>
         }
 
         componentDidMount() {
-            // console.log(localStorage.getItem("userdata"));
             if (localStorage.getItem("userdata")) {
                 const userdata = JSON.parse(localStorage.getItem('userdata'))
-                console.log(userdata);
                 axios
                   .post(`${URL}/api/auth/checkauth`, {token: userdata.token})
                   .then(res => {
@@ -42,6 +40,7 @@ const Authenticate = App => Login =>
                     password: this.state.password
                 })
                 .then(res => {
+                    console.log(res.data)
                     localStorage.setItem("userdata", res.data.token);
                     this.setState({
                         loggedIn: true

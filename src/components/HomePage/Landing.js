@@ -28,13 +28,17 @@ export class Landing extends React.Component {
       .catch(err => console.log("123", err));
   }
 
-  addEntry = dogBanana => {
+  addEntry = (event, newEntry) => {
+    event.preventDefault();
+    console.log(newEntry)
+    const token = localStorage.getItem("userdata");
+    const headers = {headers: {"content-type":"application/JSON", Authorization:token}}
     axios
-        .post(`${URL}`, dogBanana)
+        .post(`${URL}/api/sleep`, newEntry, headers)
         .then(res => {
             this.setState({ sleepstats: res.data });
         })
-        .catch(err => console.log('456', err))
+        .catch(err => console.log('456', err.response))
   }
 
   deleteEntry = id => {
@@ -43,10 +47,11 @@ export class Landing extends React.Component {
     axios
         .delete(`${URL}/api/sleep/${id}`, headers)
         .then(res => {
-            this.setState({ sleepstats: res.data })
+            this.setState({ sleepstats: this.state.sleepstats.filter(sleepstat => sleepstat.id !== id) })
         })
         .catch(err => console.log('789', err))
   }
+
 
   togglePopup() {
       this.setState({
@@ -55,9 +60,7 @@ export class Landing extends React.Component {
   }
 
   setActive = id => {
-    // console.log(this.state.sleepstats)
     const saved = this.state.sleepstats.find(stat => {
-      // console.log(stat.id)
       return stat.id === id})
     this.setState({
       active: saved

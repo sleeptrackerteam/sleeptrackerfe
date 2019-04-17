@@ -12,3 +12,11 @@ const SleepEntry = props => {
 }
 
 export default SleepEntry;
+SleepEntry.defaultProps = {
+    sleepstat: {
+        date: 1,
+        timeSlept: 2,
+        sleepMood: 3,
+        wakeMood: 4
+    }
+}

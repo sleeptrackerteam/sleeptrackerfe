@@ -38,7 +38,7 @@ export class Landing extends React.Component {
         .then(res => {
             this.setState({ sleepstats: [newEntry, ...this.state.sleepstats] });
         })
-        .catch(err => console.log("Couldn't Add", err.response))
+        .catch(err => console.log("Couldn't Add", err))
   }
 
   deleteEntry = id => {
@@ -51,7 +51,6 @@ export class Landing extends React.Component {
         })
         .catch(err => console.log("Couldn't Delete", err))
   }
-
 
   togglePopup() {
       this.setState({

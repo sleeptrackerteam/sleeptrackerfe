@@ -25,20 +25,20 @@ export class Landing extends React.Component {
       .then(res => {
         this.setState({ sleepstats: res.data });
       })
-      .catch(err => console.log("123", err));
+      .catch(err => console.log("Couldn't Load", err));
   }
 
-  addEntry = (event, newEntry) => {
+  addEntry = (event, entry) => {
     event.preventDefault();
-    console.log(newEntry)
+    const newEntry = {...entry, user_id: localStorage.getItem("userid")};
     const token = localStorage.getItem("userdata");
     const headers = {headers: {"content-type":"application/JSON", Authorization:token}}
     axios
         .post(`${URL}/api/sleep`, newEntry, headers)
         .then(res => {
-            this.setState({ sleepstats: res.data });
+            this.setState({ sleepstats: [newEntry, ...this.state.sleepstats] });
         })
-        .catch(err => console.log('456', err.response))
+        .catch(err => console.log("Couldn't Add", err.response))
   }
 
   deleteEntry = id => {
@@ -49,7 +49,7 @@ export class Landing extends React.Component {
         .then(res => {
             this.setState({ sleepstats: this.state.sleepstats.filter(sleepstat => sleepstat.id !== id) })
         })
-        .catch(err => console.log('789', err))
+        .catch(err => console.log("Couldn't Delete", err))
   }
 
 

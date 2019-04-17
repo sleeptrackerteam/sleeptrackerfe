@@ -84,7 +84,7 @@ class EntryForm extends React.Component {
                     <div>
                         <h2>New Sleep Entry</h2>
                         <form onSubmit={e => this.props.addEntry(e, {timeSlept: this.state.timeSlept, sleepMood: this.state.sleepMood, wakeMood: this.state.wakeMood, date: this.getDate()})}>
-                            <h4>Total hour slept</h4>
+                            <h4>Total hours slept</h4>
                             <input
                             type="number"
                             onChange={this.handleChange}

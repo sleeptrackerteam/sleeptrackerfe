@@ -42,6 +42,7 @@ const Authenticate = App => Login =>
                 .then(res => {
                     console.log(res.data)
                     localStorage.setItem("userdata", res.data.token);
+                    localStorage.setItem("userid", res.data.user_id);
                     this.setState({
                         loggedIn: true
                     });

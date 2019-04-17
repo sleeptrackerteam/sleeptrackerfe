@@ -4,6 +4,7 @@ import axios from "axios";
 import SleepEntryList from "./SleepEntryList";
 import SleepEntry from './SleepEntry';
 import { Route, Switch } from 'react-router-dom';
+import {Line} from 'react-chartjs-2';
 
 const URL = "https://sleeper-app.herokuapp.com";
 
@@ -13,19 +14,138 @@ export class Landing extends React.Component {
     this.state = {
         showPopup: false,
         sleepstats:[],
-        active:[]
+        active:[],
+        last7Days:[],
+        day0: {},
+        day1: {},
+        day2: {},
+        day3: {},
+        day4: {},
+        day5: {},
+        day6: {}
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const token = localStorage.getItem("userdata");
     const headers = {headers: {"content-type":"application/JSON", Authorization:token}}
+    await this.last7Days();
+    await this.getGraphdata(this.state.last7Days)
     axios
       .get(`${URL}/api/sleep`, headers)
       .then(res => {
         this.setState({ sleepstats: res.data });
       })
       .catch(err => console.log("Couldn't Load", err));
+  }
+
+  formatDate = (date) => {
+    let dd = date.getDate();
+    let mm = date.getMonth()+1;
+    let yyyy = date.getFullYear();
+    if(dd<10) {dd='0'+dd}
+    if(mm<10) {mm='0'+mm}
+    date = yyyy+'-'+mm+'-'+dd;
+    return date
+  }
+
+  last7Days = () => {
+      let today = new Date();
+      let oneDayAgo = new Date(today);
+      let twoDaysAgo = new Date(today);
+      let threeDaysAgo = new Date(today);
+      let fourDaysAgo = new Date(today);
+      let fiveDaysAgo = new Date(today);
+      let sixDaysAgo = new Date(today);
+
+      oneDayAgo.setDate(today.getDate() - 1);
+      twoDaysAgo.setDate(today.getDate() - 2);
+      threeDaysAgo.setDate(today.getDate() - 3);
+      fourDaysAgo.setDate(today.getDate() - 4);
+      fiveDaysAgo.setDate(today.getDate() - 5);
+      sixDaysAgo.setDate(today.getDate() - 6);
+
+      let result0 = this.formatDate(today);
+      let result1 = this.formatDate(oneDayAgo);
+      let result2 = this.formatDate(twoDaysAgo);
+      let result3 = this.formatDate(threeDaysAgo);
+      let result4 = this.formatDate(fourDaysAgo);
+      let result5 = this.formatDate(fiveDaysAgo);
+      let result6 = this.formatDate(sixDaysAgo);
+
+      let result = [result0,result1,result2,result3,result4,result5,result6];
+      this.setState({ last7Days: result });
+  }
+
+  getGraphdata = dates => {
+    const token = localStorage.getItem("userdata");
+    const userid = localStorage.getItem("userid")
+    const headers = {headers: {"content-type":"application/JSON", Authorization:token}}
+      axios.get(`${URL}/api/sleep/${userid}/${dates[0]}`, headers)
+      .then(res => {
+        this.setState({ day0: res.data })
+      })
+      .catch(err => console.log(err))
+      axios.get(`${URL}/api/sleep/${userid}/${dates[1]}`, headers)
+      .then(res => {
+        this.setState({ day1: res.data })
+      })
+      .catch(err => console.log(err))
+      axios.get(`${URL}/api/sleep/${userid}/${dates[2]}`, headers)
+      .then(res => {
+        this.setState({ day2: res.data })
+      })
+      .catch(err => console.log(err))
+      axios.get(`${URL}/api/sleep/${userid}/${dates[3]}`, headers)
+      .then(res => {
+        this.setState({ day3: res.data })
+      })
+      .catch(err => console.log(err))
+      axios.get(`${URL}/api/sleep/${userid}/${dates[4]}`, headers)
+      .then(res => {
+        this.setState({ day4: res.data })
+      })
+      .catch(err => console.log(err))
+      axios.get(`${URL}/api/sleep/${userid}/${dates[5]}`, headers)
+      .then(res => {
+        this.setState({ day5: res.data })
+      })
+      .catch(err => console.log(err))
+      axios.get(`${URL}/api/sleep/${userid}/${dates[6]}`, headers)
+      .then(res => {
+        this.setState({ day6: res.data })
+      })
+      .catch(err => console.log(err))
+  }
+
+  inputGraphdata = () => {
+    const data = {
+      labels: [this.state.last7Days[6], this.state.last7Days[5], this.state.last7Days[4], this.state.last7Days[3], this.state.last7Days[2], this.state.last7Days[1], this.state.last7Days[0]],
+      datasets: [
+        {
+          label: 'Hours slept per night',
+          fill: false,
+          lineTension: 0.1,
+          backgroundColor: 'rgba(75,192,192,0.4)',
+          borderColor: 'rgba(75,192,192,1)',
+          borderCapStyle: 'butt',
+          borderDash: [],
+          borderDashOffset: 0.0,
+          borderJoinStyle: 'miter',
+          pointBorderColor: 'rgba(75,192,192,1)',
+          pointBackgroundColor: '#fff',
+          pointBorderWidth: 1,
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+          pointHoverBorderColor: 'rgba(220,220,220,1)',
+          pointHoverBorderWidth: 2,
+          pointRadius: 1,
+          pointHitRadius: 10,
+          data: [this.state.day6.timeSlept || null, this.state.day5.timeSlept || null, this.state.day4.timeSlept || null, this.state.day3.timeSlept || null, this.state.day2.timeSlept || null, this.state.day1.timeSlept || null, this.state.day0.timeSlept || null]
+        }
+      ]
+    };
+    return data
   }
 
   addEntry = (event, entry) => {
@@ -72,6 +192,7 @@ export class Landing extends React.Component {
     return (
       <div>
         <h2>Your Week in Review</h2>
+        <Line data={this.inputGraphdata()} />
         <button onClick={this.togglePopup.bind(this)}>Log a new sleep entry</button>
         {this.state.showPopup ?
             <EntryForm 

@@ -73,7 +73,7 @@ class EntryForm extends React.Component {
         if (mm < 10) {
         mm = '0' + mm;
         } 
-        const newdate = yyyy + '/' + mm + '/' + dd;
+        const newdate = yyyy + '-' + mm + '-' + dd;
         return newdate;
     }
 
@@ -105,7 +105,7 @@ class EntryForm extends React.Component {
                                 <i className="far fa-smile-beam" onClick={this.wakemoodSmilebeamOnClick}></i>
                             </span>
                                 <button type="submit">Add Entry</button>
-                            <button onClick={this.props.closePopup}>Close</button>
+                            <button onClick={this.props.closePopup}>Close Form</button>
                         </form>
                     </div>
                 </div>

@@ -1,5 +1,4 @@
 import React from 'react';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class EntryForm extends React.Component {
     constructor() {
@@ -21,21 +20,27 @@ class EntryForm extends React.Component {
                             type="time"
                             />
                             <h4>Mood at bed time:</h4>
-                            <i className="far fa-frown"></i>
-                            <i className="far fa-meh"></i>
-                            <i className="far fa-smile"></i>
-                            <i className="far fa-smile-beam"></i>
+                            <span className="emojis">
+                                <i className="far fa-frown"></i>
+                                <i className="far fa-meh"></i>
+                                <i className="far fa-smile"></i>
+                                <i className="far fa-smile-beam"></i>
+                            </span>
                             <h4>Mood when waking:</h4>
-                            <i className="far fa-frown"></i>
-                            <i className="far fa-meh"></i>
-                            <i className="far fa-smile"></i>
-                            <i className="far fa-smile-beam"></i>
+                            <span className="emojis">
+                                <i className="far fa-frown"></i>
+                                <i className="far fa-meh"></i>
+                                <i className="far fa-smile"></i>
+                                <i className="far fa-smile-beam"></i>
+                            </span>
                             <h4>Mood throughout day:</h4>
-                            <i className="far fa-frown"></i>
-                            <i className="far fa-meh"></i>
-                            <i className="far fa-smile"></i>
-                            <i className="far fa-smile-beam"></i>
-                            <button type="submit">Add Entry</button>
+                            <span className="emojis">
+                                <i className="far fa-frown"></i>
+                                <i className="far fa-meh"></i>
+                                <i className="far fa-smile"></i>
+                                <i className="far fa-smile-beam"></i>
+                                <button type="submit">Add Entry</button>
+                            </span>
                             <button onClick={this.props.closePopup}>Close</button>
                         </form>
                     </div>
@@ -46,12 +51,3 @@ class EntryForm extends React.Component {
 }
 
 export default EntryForm;
-
-{/* <i className="far fa-frown"></i>
-<i className="far fa-meh"></i>
-<i className="far fa-smile"></i>
-<i className="far fa-smile-beam"></i>
-<FontAwesomeIcon icon="frown" />
-<FontAwesomeIcon icon="meh" />
-<FontAwesomeIcon icon="smile" />
-<FontAwesomeIcon icon="smile-beam" /> */}

@@ -6,13 +6,18 @@ const SleepEntryList = (props) => {
     const displayEntries = props.sleepstats.map(sleepstat => {
         return (
             <div>
-                <Link to={`/sleep/${sleepstat.id}`} key={sleepstat.id} >
+                <Link to={`api/sleep/${sleepstat.id}`} key={sleepstat.id} >
                     <SleepEntry sleepstat={sleepstat}/>
                 </Link>
-                <button></button>
+                <button onClick={() => props.deleteEntry(sleepstat.id)}>Delete</button>
             </div>
         )
-    })
+    });
+    return (
+        <div>
+            {displayEntries}
+        </div>
+    )
 }
 
 export default SleepEntryList;

@@ -3,7 +3,7 @@ import EntryForm from "./EntryForm";
 import axios from "axios";
 import SleepEntryList from "./SleepEntryList";
 import SleepEntry from './SleepEntry';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 const URL = "https://sleeper-app.herokuapp.com";
 
@@ -55,15 +55,14 @@ export class Landing extends React.Component {
   }
 
   setActive = id => {
-    console.log(this.state.sleepstats)
+    // console.log(this.state.sleepstats)
     const saved = this.state.sleepstats.find(stat => {
-      console.log(stat.id)
-      return stat.id == id})
+      // console.log(stat.id)
+      return stat.id === id})
     this.setState({
       active: saved
     },
-    this.props.history.push(`/sleep/${id}`)
-    // console.log(this.state.active)
+    this.props.history.push(`/home/sleep/${id}`)
     )
   }
 
@@ -80,9 +79,15 @@ export class Landing extends React.Component {
                 : null
         }
         <div>
-          <Route to="/sleep/:id" render={props =>
-              <SleepEntry sleepstat={this.state.active}/>} />
-            <SleepEntryList sleepstats={this.state.sleepstats} deleteEntry={this.deleteEntry} setActive={this.setActive}/>
+          <Switch>
+            <Route path="/home/sleep/:id" render={props =>
+                <SleepEntry sleepstat={this.state.active}/>} 
+              />
+            <Route path="/" render={props => 
+              <SleepEntryList sleepstats={this.state.sleepstats} deleteEntry={this.deleteEntry} setActive={this.setActive}/>
+            }
+            />
+          </Switch>
         </div>
       </div>
     );

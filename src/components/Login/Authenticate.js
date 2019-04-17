@@ -15,7 +15,7 @@ const Authenticate = App => Login =>
         }
 
         componentDidMount() {
-            console.log(localStorage.getItem("userdata"));
+            // console.log(localStorage.getItem("userdata"));
             if (localStorage.getItem("userdata")) {
                 const userdata = JSON.parse(localStorage.getItem('userdata'))
                 console.log(userdata);

@@ -33,7 +33,6 @@ export class Landing extends React.Component {
     await this.last7Days();
     await this.getGraphdata(this.state.last7Days)
     await this.inputGraphdata()
-    console.log(this.state.graphData)
     axios
       .get(`${URL}/api/sleep`, headers)
       .then(res => {
@@ -325,16 +324,19 @@ export class Landing extends React.Component {
 
   render() {
     return (
-      <div className="landingstats">
+      <div>
         <div className="landing-upper">
           <div className="weeklystats">
             <h2>Your Week in Review</h2>
             <div className="linegraph">  
               <Line data={this.state.graphData} 
+                width={500}
+                height={300}
+                options={{ maintainAspectRatio: false }}
               />
             </div>
           </div>
-          <button onClick={this.togglePopup.bind(this)}>Log a new sleep entry</button>
+          <button className="lognew-button" onClick={this.togglePopup.bind(this)}>Log a new sleep entry</button>
           {this.state.showPopup ?
               <EntryForm 
               addEntry={this.addEntry} 

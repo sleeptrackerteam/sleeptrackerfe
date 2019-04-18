@@ -16,12 +16,10 @@ class UpdateForm extends React.Component {
     componentDidMount() {
         const token = localStorage.getItem("userdata");
         const headers = {headers: {"content-type":"application/JSON", Authorization:token}}
-        console.log(this.props.match)
         const {id} = this.props.match.params
         axios
         .get(`${URL}/api/sleep/${id}`, headers)
         .then(res => {
-            console.log(res.data)
             this.setState({ timeSlept: res.data.timeSlept, sleepMood: res.data.sleepMood, wakeMood: res.data.wakeMood, date: res.data.date })
         })
         .catch(err => console.log(err))
@@ -108,20 +106,24 @@ class UpdateForm extends React.Component {
                             />
                             <h4>Mood at bed time:</h4>
                             <span className="emojis">
+                                1
                                 <i className="far fa-frown" onClick={this.sleepmoodFrownOnClick}></i>
                                 <i className="far fa-meh" onClick={this.sleepmoodMehOnClick}></i>
                                 <i className="far fa-smile" onClick={this.sleepmoodSmileOnClick}></i>
                                 <i className="far fa-smile-beam" onClick={this.sleepmoodSmilebeamOnClick}></i>
+                                4
                             </span>
                             <h4>Mood when waking:</h4>
                             <span className="emojis">
+                                Tired
                                 <i className="far fa-frown" onClick={this.wakemoodFrownOnClick}></i>
                                 <i className="far fa-meh" onClick={this.wakemoodMehOnClick}></i>
                                 <i className="far fa-smile" onClick={this.wakemoodSmileOnClick}></i>
                                 <i className="far fa-smile-beam" onClick={this.wakemoodSmilebeamOnClick}></i>
+                                Great!
                             </span>
                             <div>
-                                <button type="submit">Update Entry</button>
+                                <button className="entry-button" type="submit">Update Entry</button>
                             </div>
                         </form>
                     </div>

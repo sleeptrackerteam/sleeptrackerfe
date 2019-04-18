@@ -104,8 +104,10 @@ class EntryForm extends React.Component {
                                 <i className="far fa-smile" onClick={this.wakemoodSmileOnClick}></i>
                                 <i className="far fa-smile-beam" onClick={this.wakemoodSmilebeamOnClick}></i>
                             </span>
+                            <div>
                                 <button type="submit">Add Entry</button>
-                            <button onClick={this.props.closePopup}>Close Form</button>
+                                <button onClick={this.props.closePopup}>Close Form</button>
+                            </div>
                         </form>
                     </div>
                 </div>

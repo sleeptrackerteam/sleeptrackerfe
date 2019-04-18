@@ -2,9 +2,9 @@ import React from "react";
 import EntryForm from "./EntryForm";
 import axios from "axios";
 import SleepEntryList from "./SleepEntryList";
-import SleepEntry from './SleepEntry';
 import { Route, Switch } from 'react-router-dom';
 import {Line} from 'react-chartjs-2';
+import UpdateSleepEntry from './UpdateSleepEntry';
 
 const URL = "https://sleeper-app.herokuapp.com";
 
@@ -168,8 +168,23 @@ export class Landing extends React.Component {
         .delete(`${URL}/api/sleep/${id}`, headers)
         .then(res => {
             this.setState({ sleepstats: this.state.sleepstats.filter(sleepstat => sleepstat.id !== id) })
+            alert('An entry has been deleted')
         })
         .catch(err => console.log("Couldn't Delete", err))
+  }
+
+  updateEntry = (event, entry) => {
+    event.preventDefault();
+    const updateEntry = {...entry, user_id: localStorage.getItem("userid")};
+    const token = localStorage.getItem("userdata");
+    const headers = {headers: {"content-type":"application/JSON", Authorization:token}}
+    axios
+      .put(`${URL}/api/sleep/${entry.id}`, updateEntry, headers)
+      .then(res => {
+        this.setState({ sleepstats: [updateEntry, ...this.state.sleepstats]})
+        alert('Your entry has been updated!')
+      })
+      .catch(err => console.log("Couldn't Update", err))
   }
 
   togglePopup() {
@@ -204,7 +219,7 @@ export class Landing extends React.Component {
         <div>
           <Switch>
             <Route path="/home/sleep/:id" render={props =>
-                <SleepEntry sleepstat={this.state.active}/>} 
+                <UpdateSleepEntry sleepstat={this.state.active} updateEntry={this.updateEntry}/>} 
               />
             <Route path="/" render={props => 
               <SleepEntryList sleepstats={this.state.sleepstats} deleteEntry={this.deleteEntry} setActive={this.setActive}/>

@@ -40,7 +40,6 @@ const Authenticate = App => Login =>
                     password: this.state.password
                 })
                 .then(res => {
-                    console.log(res.data)
                     localStorage.setItem("userdata", res.data.token);
                     localStorage.setItem("userid", res.data.user_id);
                     this.setState({
@@ -59,7 +58,6 @@ const Authenticate = App => Login =>
             })
             this.props.history.push('/login');
         }
-
 
         render() {
             if (this.state.loggedIn) {

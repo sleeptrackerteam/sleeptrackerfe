@@ -4,7 +4,7 @@ import UpdateForm from './UpdateForm';
 const UpdateSleepEntry = props => {
     return (
         <div>
-            <div>
+            <div className="update-entry">
                 <h4>Date: {props.sleepstat.date}</h4>
                 <p>Time slept:{props.sleepstat.timeSlept} hours</p>
                 <p>Mood at bed time:</p>{props.sleepstat.sleepMood}

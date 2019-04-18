@@ -91,21 +91,25 @@ class EntryForm extends React.Component {
                             />
                             <h4>Mood at bed time:</h4>
                             <span className="emojis">
+                                1
                                 <i className="far fa-frown" onClick={this.sleepmoodFrownOnClick}></i>
                                 <i className="far fa-meh" onClick={this.sleepmoodMehOnClick}></i>
                                 <i className="far fa-smile" onClick={this.sleepmoodSmileOnClick}></i>
                                 <i className="far fa-smile-beam" onClick={this.sleepmoodSmilebeamOnClick}></i>
+                                4
                             </span>
                             <h4>Mood when waking:</h4>
                             <span className="emojis">
+                                Tired
                                 <i className="far fa-frown" onClick={this.wakemoodFrownOnClick}></i>
                                 <i className="far fa-meh" onClick={this.wakemoodMehOnClick}></i>
                                 <i className="far fa-smile" onClick={this.wakemoodSmileOnClick}></i>
                                 <i className="far fa-smile-beam" onClick={this.wakemoodSmilebeamOnClick}></i>
+                                Great!
                             </span>
                             <div>
-                                <button type="submit">Add Entry</button>
-                                <button onClick={this.props.closePopup}>Close Form</button>
+                                <button className="entry-button" type="submit">Add</button>
+                                <button className="entry-button" onClick={this.props.closePopup}>Close</button>
                             </div>
                         </form>
                     </div>

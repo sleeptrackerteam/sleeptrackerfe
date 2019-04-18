@@ -79,9 +79,7 @@ class UpdateForm extends React.Component {
 
     render() {
         return (
-            <div>
-                <div>
-                    <div>
+                    <div className="dec-grad">
                         <h2>Update Sleep Entry</h2>
                         <form onSubmit={e => this.props.updateEntry(e, {id: this.props.sleepstat.id, timeSlept: this.state.timeSlept, sleepMood: this.state.sleepMood, wakeMood: this.state.wakeMood, date: this.getDate()})}>
                             <h4>Total hours slept</h4>
@@ -109,8 +107,6 @@ class UpdateForm extends React.Component {
                             </div>
                         </form>
                     </div>
-                </div>
-            </div>
         )
     }
 }

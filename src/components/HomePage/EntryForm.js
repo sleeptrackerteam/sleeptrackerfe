@@ -79,9 +79,8 @@ class EntryForm extends React.Component {
 
     render() {
         return (
-            <div>
-                <div>
-                    <div>
+                <div className="popup">
+                    <div className="popup-inner">
                         <h2>New Sleep Entry</h2>
                         <form onSubmit={e => this.props.addEntry(e, {timeSlept: this.state.timeSlept, sleepMood: this.state.sleepMood, wakeMood: this.state.wakeMood, date: this.getDate()})}>
                             <h4>Total hours slept</h4>
@@ -111,7 +110,6 @@ class EntryForm extends React.Component {
                         </form>
                     </div>
                 </div>
-            </div>
         )
     }
 }

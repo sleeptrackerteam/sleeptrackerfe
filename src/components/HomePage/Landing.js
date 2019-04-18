@@ -205,17 +205,24 @@ export class Landing extends React.Component {
 
   render() {
     return (
-      <div>
-        <h2>Your Week in Review</h2>
-        <Line data={this.inputGraphdata()} />
-        <button onClick={this.togglePopup.bind(this)}>Log a new sleep entry</button>
-        {this.state.showPopup ?
-            <EntryForm 
-                addEntry={this.addEntry} 
-                closePopup={this.togglePopup.bind(this)} 
-                /> 
-                : null
-        }
+      <div className="landingstats">
+        <div className="landing-upper">
+          <div className="weeklystats">
+            <h2>Your Week in Review</h2>
+            <div className="linegraph">  
+              <Line data={this.inputGraphdata()} 
+              />
+            </div>
+          </div>
+          <button onClick={this.togglePopup.bind(this)}>Log a new sleep entry</button>
+          {this.state.showPopup ?
+              <EntryForm 
+              addEntry={this.addEntry} 
+              closePopup={this.togglePopup.bind(this)} 
+              /> 
+              : null
+            }
+          </div>
         <div>
           <Switch>
             <Route path="/home/sleep/:id" render={props =>

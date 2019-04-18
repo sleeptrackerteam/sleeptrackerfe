@@ -4,7 +4,7 @@ import SleepEntry from './SleepEntry';
 const SleepEntryList = (props) => {
     const displayEntries = props.sleepstats.map(sleepstat => {
         return (
-            <div>
+            <div className="indiv-entries">
                 <div onClick={() => {props.setActive(sleepstat.id)}} key={sleepstat.id}>
                     <SleepEntry sleepstat={sleepstat}/>
                 </div>
@@ -13,7 +13,7 @@ const SleepEntryList = (props) => {
         )
     });
     return (
-        <div>
+        <div className="entries">
             {displayEntries}
         </div>
     )

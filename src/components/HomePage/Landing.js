@@ -22,7 +22,8 @@ export class Landing extends React.Component {
         day3: {},
         day4: {},
         day5: {},
-        day6: {}
+        day6: {},
+        graphData: {}
     };
   }
 
@@ -31,6 +32,8 @@ export class Landing extends React.Component {
     const headers = {headers: {"content-type":"application/JSON", Authorization:token}}
     await this.last7Days();
     await this.getGraphdata(this.state.last7Days)
+    await this.inputGraphdata()
+    console.log(this.state.graphData)
     axios
       .get(`${URL}/api/sleep`, headers)
       .then(res => {
@@ -77,41 +80,41 @@ export class Landing extends React.Component {
       this.setState({ last7Days: result });
   }
 
-  getGraphdata = dates => {
+  getGraphdata = async dates => {
     const token = localStorage.getItem("userdata");
     const userid = localStorage.getItem("userid")
     const headers = {headers: {"content-type":"application/JSON", Authorization:token}}
-      axios.get(`${URL}/api/sleep/${userid}/${dates[0]}`, headers)
+      await axios.get(`${URL}/api/sleep/${userid}/${dates[0]}`, headers)
       .then(res => {
         this.setState({ day0: res.data })
       })
       .catch(err => console.log(err))
-      axios.get(`${URL}/api/sleep/${userid}/${dates[1]}`, headers)
+      await axios.get(`${URL}/api/sleep/${userid}/${dates[1]}`, headers)
       .then(res => {
         this.setState({ day1: res.data })
       })
       .catch(err => console.log(err))
-      axios.get(`${URL}/api/sleep/${userid}/${dates[2]}`, headers)
+      await axios.get(`${URL}/api/sleep/${userid}/${dates[2]}`, headers)
       .then(res => {
         this.setState({ day2: res.data })
       })
       .catch(err => console.log(err))
-      axios.get(`${URL}/api/sleep/${userid}/${dates[3]}`, headers)
+      await axios.get(`${URL}/api/sleep/${userid}/${dates[3]}`, headers)
       .then(res => {
         this.setState({ day3: res.data })
       })
       .catch(err => console.log(err))
-      axios.get(`${URL}/api/sleep/${userid}/${dates[4]}`, headers)
+      await axios.get(`${URL}/api/sleep/${userid}/${dates[4]}`, headers)
       .then(res => {
         this.setState({ day4: res.data })
       })
       .catch(err => console.log(err))
-      axios.get(`${URL}/api/sleep/${userid}/${dates[5]}`, headers)
+      await axios.get(`${URL}/api/sleep/${userid}/${dates[5]}`, headers)
       .then(res => {
         this.setState({ day5: res.data })
       })
       .catch(err => console.log(err))
-      axios.get(`${URL}/api/sleep/${userid}/${dates[6]}`, headers)
+      await axios.get(`${URL}/api/sleep/${userid}/${dates[6]}`, headers)
       .then(res => {
         this.setState({ day6: res.data })
       })
@@ -145,46 +148,52 @@ export class Landing extends React.Component {
         }
       ]
     };
-    return data
+    this.setState({ graphData: data })
   }
 
-  addEntry = (event, entry) => {
+  addEntry = async (event, entry) => {
     event.preventDefault();
     const newEntry = {...entry, user_id: localStorage.getItem("userid")};
     const token = localStorage.getItem("userdata");
     const headers = {headers: {"content-type":"application/JSON", Authorization:token}}
-    axios
+    await axios
         .post(`${URL}/api/sleep`, newEntry, headers)
         .then(res => {
             this.setState({ sleepstats: [newEntry, ...this.state.sleepstats] });
         })
         .catch(err => console.log("Couldn't Add", err))
+      await this.getGraphdata(this.state.last7Days)
+      await this.inputGraphdata()
   }
 
-  deleteEntry = id => {
+  deleteEntry = async id => {
     const token = localStorage.getItem("userdata");
     const headers = {headers: {"content-type":"application/JSON", Authorization:token}}
-    axios
+    await axios
         .delete(`${URL}/api/sleep/${id}`, headers)
         .then(res => {
             this.setState({ sleepstats: this.state.sleepstats.filter(sleepstat => sleepstat.id !== id) })
             alert('An entry has been deleted')
         })
         .catch(err => console.log("Couldn't Delete", err))
+      await this.getGraphdata(this.state.last7Days)
+      await this.inputGraphdata()
   }
 
-  updateEntry = (event, entry) => {
+  updateEntry = async (event, entry) => {
     event.preventDefault();
     const updateEntry = {...entry, user_id: localStorage.getItem("userid")};
     const token = localStorage.getItem("userdata");
     const headers = {headers: {"content-type":"application/JSON", Authorization:token}}
-    axios
+    await axios
       .put(`${URL}/api/sleep/${entry.id}`, updateEntry, headers)
       .then(res => {
         this.setState({ sleepstats: [updateEntry, ...this.state.sleepstats]})
         alert('Your entry has been updated!')
       })
       .catch(err => console.log("Couldn't Update", err))
+    await this.getGraphdata(this.state.last7Days)
+    await this.inputGraphdata()
   }
 
   togglePopup() {
@@ -203,6 +212,117 @@ export class Landing extends React.Component {
     )
   }
 
+  calculateWeekaverage = () => {
+    const sleepScores = {}
+    // if (Object.entries(this.state.day0).length !== 0) sleepScores[this.state.day0.timeSlept] = this.calculateMood(this.state.day0.wakeMood)
+    // if (Object.entries(this.state.day1).length !== 0) {
+    //   if (this.state.day1.timeSlept in sleepScores) {
+    //     sleepScores[this.state.day1.timeSlept] += this.calculateMood(this.state.day1.wakeMood)
+    //   } else {
+    //     sleepScores[this.state.day1.timeSlept] = this.calculateMood(this.state.day1.wakeMood)
+    //   }
+    // }
+    // if (Object.entries(this.state.day2).length !== 0) {
+    //   if (this.state.day2.timeSlept in sleepScores) {
+    //     sleepScores[this.state.day2.timeSlept] += this.calculateMood(this.state.day2.wakeMood)
+    //   } else {
+    //     sleepScores[this.state.day2.timeSlept] = this.calculateMood(this.state.day2.wakeMood)
+    //   }
+    // }
+    // if (Object.entries(this.state.day3).length !== 0) {
+    //   if (this.state.day3.timeSlept in sleepScores) {
+    //     sleepScores[this.state.day3.timeSlept] += this.calculateMood(this.state.day3.wakeMood)
+    //   } else {
+    //     sleepScores[this.state.day3.timeSlept] = this.calculateMood(this.state.day3.wakeMood)
+    //   }
+    // }
+    // if (Object.entries(this.state.day4).length !== 0) {
+    //   if (this.state.day4.timeSlept in sleepScores) {
+    //     sleepScores[this.state.day4.timeSlept] += this.calculateMood(this.state.day4.wakeMood)
+    //   } else {
+    //     sleepScores[this.state.day4.timeSlept] = this.calculateMood(this.state.day4.wakeMood)
+    //   }
+    // }
+    // if (Object.entries(this.state.day5).length !== 0) {
+    //   if (this.state.day5.timeSlept in sleepScores) {
+    //     sleepScores[this.state.day5.timeSlept] += this.calculateMood(this.state.day5.wakeMood)
+    //   } else {
+    //     sleepScores[this.state.day5.timeSlept] = this.calculateMood(this.state.day5.wakeMood)
+    //   }
+    // }
+    // if (Object.entries(this.state.day6).length !== 0) {
+    //   if (this.state.day6.timeSlept in sleepScores) {
+    //     sleepScores[this.state.day6.timeSlept] += this.calculateMood(this.state.day6.wakeMood)
+    //   } else {
+    //     sleepScores[this.state.day6.timeSlept] = this.calculateMood(this.state.day6.wakeMood)
+    //   }
+    // }
+    if (this.state.day0) sleepScores[this.state.day0.timeSlept] = (this.state.day0.wakeMood)
+    if (this.state.day1) {
+      if (this.state.day1.timeSlept in sleepScores) {
+        sleepScores[this.state.day1.timeSlept] += (this.state.day1.wakeMood)
+      } else {
+        sleepScores[this.state.day1.timeSlept] = (this.state.day1.wakeMood)
+      }
+    }
+    if (this.state.day2) {
+      if (this.state.day2.timeSlept in sleepScores) {
+        sleepScores[this.state.day2.timeSlept] += (this.state.day2.wakeMood)
+      } else {
+        sleepScores[this.state.day2.timeSlept] = (this.state.day2.wakeMood)
+      }
+    }
+    if (this.state.day3) {
+      if (this.state.day3.timeSlept in sleepScores) {
+        sleepScores[this.state.day3.timeSlept] += (this.state.day3.wakeMood)
+      } else {
+        sleepScores[this.state.day3.timeSlept] = (this.state.day3.wakeMood)
+      }
+    }
+    if (this.state.day4) {
+      if (this.state.day4.timeSlept in sleepScores) {
+        sleepScores[this.state.day4.timeSlept] += (this.state.day4.wakeMood)
+      } else {
+        sleepScores[this.state.day4.timeSlept] = (this.state.day4.wakeMood)
+      }
+    }
+    if (this.state.day5) {
+      if (this.state.day5.timeSlept in sleepScores) {
+        sleepScores[this.state.day5.timeSlept] += (this.state.day5.wakeMood)
+      } else {
+        sleepScores[this.state.day5.timeSlept] = (this.state.day5.wakeMood)
+      }
+    }
+    if (this.state.day6) {
+      if (this.state.day6.timeSlept in sleepScores) {
+        sleepScores[this.state.day6.timeSlept] += (this.state.day6.wakeMood)
+      } else {
+        sleepScores[this.state.day6.timeSlept] = (this.state.day6.wakeMood)
+      }
+    }
+    let maxScore = 0
+    let optimalTimeslept = 0
+    for (let key in sleepScores) {
+      if (sleepScores[key] > maxScore) {
+        maxScore = sleepScores[key]
+        optimalTimeslept = key
+      }
+    }
+    return optimalTimeslept;
+  }
+
+  // calculateMood = (mood) => {
+  //   if (mood=1) {
+  //     return -1
+  //   } else if (mood=2) {
+  //     return 0
+  //   } else if (mood-3) {
+  //     return 1
+  //   } else if (mood=4) {
+  //     return 2
+  //   }
+  // }
+
   render() {
     return (
       <div className="landingstats">
@@ -210,7 +330,7 @@ export class Landing extends React.Component {
           <div className="weeklystats">
             <h2>Your Week in Review</h2>
             <div className="linegraph">  
-              <Line data={this.inputGraphdata()} 
+              <Line data={this.state.graphData} 
               />
             </div>
           </div>
@@ -224,9 +344,10 @@ export class Landing extends React.Component {
             }
           </div>
         <div>
+          <h2>Your optimal sleep time is: {this.calculateWeekaverage()} hours</h2>
           <Switch>
             <Route path="/home/sleep/:id" render={props =>
-                <UpdateSleepEntry sleepstat={this.state.active} updateEntry={this.updateEntry}/>} 
+                <UpdateSleepEntry sleepstat={this.state.active} updateEntry={this.updateEntry} {...props}/>} 
               />
             <Route path="/" render={props => 
               <SleepEntryList sleepstats={this.state.sleepstats} deleteEntry={this.deleteEntry} setActive={this.setActive}/>

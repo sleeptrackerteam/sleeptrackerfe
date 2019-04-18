@@ -16,11 +16,11 @@ const Authenticate = App => Login =>
 
         componentDidMount() {
             if (localStorage.getItem("userdata")) {
-                const userdata = JSON.parse(localStorage.getItem('userdata'))
+                const userdata = localStorage.getItem('userdata')
                 axios
                   .post(`${URL}/api/auth/checkauth`, {token: userdata.token})
                   .then(res => {
-                      res.data ? this.setState({ loggedIn: true }) : localStorage.clear();
+                      this.setState({ loggedIn: true });
                   })
                   .catch(err => console.log(err))
             }

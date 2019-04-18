@@ -1,14 +1,32 @@
 import React from 'react';
+import axios from 'axios';
 
+const URL = "https://sleeper-app.herokuapp.com";
 class UpdateForm extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
+                date:'',
                 timeSlept:null,
                 sleepMood:null,
                 wakeMood:null
         }
     }
+
+    componentDidMount() {
+        const token = localStorage.getItem("userdata");
+        const headers = {headers: {"content-type":"application/JSON", Authorization:token}}
+        console.log(this.props.match)
+        const {id} = this.props.match.params
+        axios
+        .get(`${URL}/api/sleep/${id}`, headers)
+        .then(res => {
+            console.log(res.data)
+            this.setState({ timeSlept: res.data.timeSlept, sleepMood: res.data.sleepMood, wakeMood: res.data.wakeMood, date: res.data.date })
+        })
+        .catch(err => console.log(err))
+    }
+    
 
     sleepmoodFrownOnClick = () => {
         this.setState({
@@ -61,27 +79,27 @@ class UpdateForm extends React.Component {
         })
     }
 
-    getDate = () => {
-        let today = new Date();
-        let dd = today.getDate();
-        let mm = today.getMonth() + 1; //January is 0!
+    // getDate = () => {
+    //     let today = new Date();
+    //     let dd = today.getDate();
+    //     let mm = today.getMonth() + 1; //January is 0!
 
-        const yyyy = today.getFullYear();
-        if (dd < 10) {
-        dd = '0' + dd;
-        } 
-        if (mm < 10) {
-        mm = '0' + mm;
-        } 
-        const newdate = yyyy + '-' + mm + '-' + dd;
-        return newdate;
-    }
+    //     const yyyy = today.getFullYear();
+    //     if (dd < 10) {
+    //     dd = '0' + dd;
+    //     } 
+    //     if (mm < 10) {
+    //     mm = '0' + mm;
+    //     } 
+    //     const newdate = yyyy + '-' + mm + '-' + dd;
+    //     return newdate;
+    // }
 
     render() {
         return (
                     <div className="dec-grad">
                         <h2>Update Sleep Entry</h2>
-                        <form onSubmit={e => this.props.updateEntry(e, {id: this.props.sleepstat.id, timeSlept: this.state.timeSlept, sleepMood: this.state.sleepMood, wakeMood: this.state.wakeMood, date: this.getDate()})}>
+                        <form onSubmit={e => this.props.updateEntry(e, {id: this.props.sleepstat.id, timeSlept: this.state.timeSlept, sleepMood: this.state.sleepMood, wakeMood: this.state.wakeMood, date: this.state.date})}>
                             <h4>Total hours slept</h4>
                             <input
                             type="number"

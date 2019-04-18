@@ -11,7 +11,7 @@ const UpdateSleepEntry = props => {
                 <p>Mood when waking:</p>{props.sleepstat.wakeMood}
             </div>
             <div>
-                <UpdateForm updateEntry={props.updateEntry} sleepstat={props.sleepstat}/>
+                <UpdateForm updateEntry={props.updateEntry} sleepstat={props.sleepstat} {...props}/>
             </div>
         </div>
     )

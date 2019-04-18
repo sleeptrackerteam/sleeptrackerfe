@@ -15,14 +15,12 @@ const Authenticate = App => Login =>
         }
 
         componentDidMount() {
-            console.log(localStorage.getItem("userdata"));
             if (localStorage.getItem("userdata")) {
-                const userdata = JSON.parse(localStorage.getItem('userdata'))
-                console.log(userdata);
+                const userdata = localStorage.getItem('userdata')
                 axios
                   .post(`${URL}/api/auth/checkauth`, {token: userdata.token})
                   .then(res => {
-                      res.data ? this.setState({ loggedIn: true }) : localStorage.clear();
+                      this.setState({ loggedIn: true });
                   })
                   .catch(err => console.log(err))
             }
@@ -43,6 +41,7 @@ const Authenticate = App => Login =>
                 })
                 .then(res => {
                     localStorage.setItem("userdata", res.data.token);
+                    localStorage.setItem("userid", res.data.user_id);
                     this.setState({
                         loggedIn: true
                     });
@@ -59,7 +58,6 @@ const Authenticate = App => Login =>
             })
             this.props.history.push('/login');
         }
-
 
         render() {
             if (this.state.loggedIn) {
